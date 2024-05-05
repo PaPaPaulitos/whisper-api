@@ -18,6 +18,11 @@ CORS(app)
 def hello():
     return "Whisper Hello World!"
 
+@app.route('/proxy-whisper', methods=['POST'])
+def proxy():
+    response = requests.post('https://whisper.fuzzylab.tech/whisper', files=request.files)
+    return jsonify(response.json()), response.status_code
+
 @app.route('/whisper', methods=['POST'])
 def handler():
     if not request.files:
